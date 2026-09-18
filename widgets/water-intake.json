@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "water-intake",
+  "name": "Water Intake",
+  "description": "Daily hydration ring against your own target.",
+  "author": "meetkool",
+  "version": "1.0.0",
+  "icon": "water_drop",
+  "accent": "#3A86FF",
+  "tags": ["health"],
+  "layout": {
+    "span": 1,
+    "minSpan": 1,
+    "maxSpan": 2,
+    "height": 140,
+    "minHeight": 120,
+    "maxHeight": 220
+  },
+  "config": [
+    {
+      "key": "glasses",
+      "label": "Glasses so far today",
+      "type": "number",
+      "default": "3",
+      "required": true
+    },
+    {
+      "key": "target",
+      "label": "Daily target",
+      "type": "number",
+      "default": "8",
+      "required": true
+    }
+  ],
+  "body": [
+    { "type": "label", "text": "Hydration" },
+    {
+      "type": "row",
+      "justify": "between",
+      "align": "center",
+      "children": [
+        {
+          "type": "metric",
+          "value": "{{config.glasses ?? 0}}",
+          "unit": "/ {{config.target ?? 8}}",
+          "caption": "glasses"
+        },
+        {
+          "type": "progressRing",
+          "value": "{{config.glasses ?? 0}}",
+          "max": "{{config.target ?? 8}}",
+          "color": "#3A86FF",
+          "size": 52,
+          "centerIcon": "water_drop"
+        }
+      ]
+    }
+  ]
+}

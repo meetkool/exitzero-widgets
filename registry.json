@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-09-18",
+  "widgets": [
+    {
+      "id": "github-profile",
+      "name": "GitHub Profile",
+      "description": "Followers, public repos and your current bio, straight from the GitHub API.",
+      "version": "1.0.0",
+      "icon": "code",
+      "accent": "#F77F00",
+      "tags": ["dev", "social"],
+      "path": "widgets/github-profile.json"
+    },
+    {
+      "id": "water-intake",
+      "name": "Water Intake",
+      "description": "A simple daily hydration ring. No network, no account, nothing to configure.",
+      "version": "1.0.0",
+      "icon": "water_drop",
+      "accent": "#3A86FF",
+      "tags": ["health"],
+      "path": "widgets/water-intake.json"
+    },
+    {
+      "id": "crypto-price",
+      "name": "Crypto Price",
+      "description": "Live price and 24h move for any coin on CoinGecko.",
+      "version": "1.0.0",
+      "icon": "trending_up",
+      "accent": "#2E9E5B",
+      "tags": ["finance"],
+      "path": "widgets/crypto-price.json"
+    }
+  ]
+}

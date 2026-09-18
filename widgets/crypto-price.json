@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "id": "crypto-price",
+  "name": "Crypto Price",
+  "description": "Live USD price and 24h move from CoinGecko.",
+  "author": "meetkool",
+  "version": "1.0.0",
+  "icon": "trending_up",
+  "accent": "#2E9E5B",
+  "tags": ["finance"],
+  "layout": {
+    "span": 1,
+    "minSpan": 1,
+    "maxSpan": 2,
+    "height": 130,
+    "minHeight": 110,
+    "maxHeight": 200
+  },
+  "config": [
+    {
+      "key": "coin",
+      "label": "CoinGecko coin id",
+      "type": "string",
+      "default": "bitcoin",
+      "hint": "bitcoin, ethereum, solana",
+      "required": true
+    }
+  ],
+  "data": {
+    "url": "https://api.coingecko.com/api/v3/simple/price?ids={{config.coin}}&vs_currencies=usd&include_24hr_change=true",
+    "method": "GET",
+    "refreshSeconds": 300,
+    "root": "{{config.coin}}"
+  },
+  "body": [
+    {
+      "type": "row",
+      "justify": "between",
+      "align": "start",
+      "children": [
+        { "type": "label", "text": "{{config.coin}}" },
+        { "type": "iconBadge", "icon": "trending_up", "color": "green", "size": 28 }
+      ]
+    },
+    {
+      "type": "metric",
+      "value": "{{data.usd ?? 0}}",
+      "format": "compact",
+      "unit": "USD",
+      "caption": "spot price"
+    },
+    {
+      "type": "badge",
+      "value": "{{data.usd_24h_change ?? 0}}",
+      "format": "oneDecimal",
+      "suffix": "% 24h",
+      "color": "green"
+    }
+  ]
+}

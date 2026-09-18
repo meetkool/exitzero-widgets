@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "id": "github-profile",
+  "name": "GitHub Profile",
+  "description": "Followers, public repos and your current bio.",
+  "author": "meetkool",
+  "version": "1.0.0",
+  "icon": "code",
+  "accent": "#F77F00",
+  "tags": ["dev", "social"],
+  "layout": {
+    "span": 2,
+    "minSpan": 1,
+    "maxSpan": 2,
+    "height": 130,
+    "minHeight": 110,
+    "maxHeight": 220
+  },
+  "config": [
+    {
+      "key": "user",
+      "label": "GitHub username",
+      "type": "string",
+      "default": "meetkool",
+      "hint": "e.g. torvalds",
+      "required": true
+    }
+  ],
+  "data": {
+    "url": "https://api.github.com/users/{{config.user}}",
+    "method": "GET",
+    "refreshSeconds": 1800
+  },
+  "body": [
+    {
+      "type": "row",
+      "justify": "between",
+      "align": "start",
+      "children": [
+        { "type": "label", "text": "GitHub" },
+        { "type": "badge", "text": "@{{data.login ?? unknown}}", "color": "orange" }
+      ]
+    },
+    {
+      "type": "row",
+      "justify": "between",
+      "align": "center",
+      "gap": 12,
+      "children": [
+        {
+          "type": "metric",
+          "value": "{{data.followers ?? 0}}",
+          "format": "compact",
+          "caption": "followers"
+        },
+        {
+          "type": "metric",
+          "value": "{{data.public_repos ?? 0}}",
+          "format": "compact",
+          "caption": "repos"
+        },
+        {
+          "type": "metric",
+          "value": "{{data.following ?? 0}}",
+          "format": "compact",
+          "caption": "following"
+        },
+        { "type": "iconBadge", "icon": "code", "color": "orange" }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "{{data.bio ?? No bio set}}",
+      "size": 11,
+      "maxLines": 1,
+      "color": "#99F8F5E4"
+    }
+  ]
+}
