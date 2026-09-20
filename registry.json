@@ -77,6 +77,19 @@
         "3d"
       ],
       "path": "widgets/world.json"
+    },
+    {
+      "id": "camera-mirror",
+      "name": "Mirror",
+      "description": "A live camera preview on your dashboard. Tap to open the lens, flip between front and back. Preview only, nothing is recorded.",
+      "version": "1.0.0",
+      "icon": "person",
+      "accent": "#F77F00",
+      "tags": [
+        "fun",
+        "camera"
+      ],
+      "path": "widgets/camera-mirror.json"
     }
   ]
 }

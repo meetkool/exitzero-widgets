@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "camera-mirror",
+  "name": "Mirror",
+  "description": "A live camera preview on your dashboard. Tap to open the lens, tap the flip button to switch front and back. Preview only, nothing is recorded.",
+  "author": "meetkool",
+  "version": "1.0.0",
+  "icon": "person",
+  "accent": "#F77F00",
+  "tags": ["fun", "camera"],
+  "layout": {
+    "span": 2,
+    "minSpan": 1,
+    "maxSpan": 2,
+    "height": 270,
+    "minHeight": 260,
+    "maxHeight": 400
+  },
+  "config": [
+    {
+      "key": "facing",
+      "label": "Which camera opens first",
+      "type": "string",
+      "default": "front",
+      "hint": "front or back",
+      "required": true
+    }
+  ],
+  "body": [
+    {
+      "type": "row",
+      "justify": "between",
+      "align": "center",
+      "children": [
+        { "type": "label", "text": "Mirror" },
+        { "type": "badge", "text": "{{config.facing ?? front}}", "color": "orange" }
+      ]
+    },
+    {
+      "type": "cameraFeed",
+      "color": "orange",
+      "size": 190,
+      "facing": "{{config.facing ?? front}}"
+    }
+  ]
+}
