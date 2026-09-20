@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "id": "world",
+  "name": "The World",
+  "description": "A wireframe planet turning on your dashboard, with a satellite overhead and pins on the cities that matter.",
+  "author": "meetkool",
+  "version": "1.0.0",
+  "icon": "cloud",
+  "accent": "#126782",
+  "tags": [
+    "fun",
+    "3d"
+  ],
+  "layout": {
+    "span": 2,
+    "minSpan": 1,
+    "maxSpan": 2,
+    "height": 215,
+    "minHeight": 205,
+    "maxHeight": 340
+  },
+  "config": [
+    {
+      "key": "spin",
+      "label": "Seconds per rotation",
+      "type": "number",
+      "default": "16",
+      "hint": "Lower spins faster. 6 is frantic, 30 is calm.",
+      "required": true
+    }
+  ],
+  "body": [
+    {
+      "type": "row",
+      "justify": "between",
+      "align": "center",
+      "children": [
+        {
+          "type": "label",
+          "text": "The World"
+        },
+        {
+          "type": "badge",
+          "text": "{{config.spin ?? 16}}s / turn",
+          "color": "teal"
+        }
+      ]
+    },
+    {
+      "type": "globe3d",
+      "color": "teal",
+      "size": 130,
+      "secondsPerSpin": "{{config.spin ?? 16}}",
+      "showAtmosphere": true,
+      "showSatellite": true,
+      "markers": [
+        {
+          "lat": 19.07,
+          "lon": 72.87
+        },
+        {
+          "lat": 12.97,
+          "lon": 77.59
+        },
+        {
+          "lat": 37.77,
+          "lon": -122.42
+        },
+        {
+          "lat": 51.51,
+          "lon": -0.13
+        },
+        {
+          "lat": 35.68,
+          "lon": 139.69
+        },
+        {
+          "lat": 1.35,
+          "lon": 103.82
+        }
+      ]
+    }
+  ]
+}

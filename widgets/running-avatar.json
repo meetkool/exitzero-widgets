@@ -4,17 +4,20 @@
   "name": "The Runner",
   "description": "A little 3D you, jogging laps on your dashboard. Never stops. Neither should you.",
   "author": "meetkool",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "icon": "directions_run",
   "accent": "#F77F00",
-  "tags": ["fun", "3d"],
+  "tags": [
+    "fun",
+    "3d"
+  ],
   "layout": {
     "span": 2,
     "minSpan": 1,
     "maxSpan": 2,
-    "height": 170,
-    "minHeight": 140,
-    "maxHeight": 280
+    "height": 190,
+    "minHeight": 180,
+    "maxHeight": 300
   },
   "config": [
     {
@@ -32,14 +35,21 @@
       "justify": "between",
       "align": "center",
       "children": [
-        { "type": "label", "text": "Still moving" },
-        { "type": "badge", "text": "{{config.pace ?? 6}}s / lap", "color": "orange" }
+        {
+          "type": "label",
+          "text": "Still moving"
+        },
+        {
+          "type": "badge",
+          "text": "{{config.pace ?? 6}}s / lap",
+          "color": "orange"
+        }
       ]
     },
     {
       "type": "avatar3d",
       "color": "orange",
-      "size": 118,
+      "size": 110,
       "secondsPerLap": "{{config.pace ?? 6}}",
       "showTrack": true
     }

@@ -56,7 +56,7 @@
       "id": "running-avatar",
       "name": "The Runner",
       "description": "A little 3D you, jogging laps on your dashboard. Never stops. Neither should you.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "icon": "directions_run",
       "accent": "#F77F00",
       "tags": [
@@ -64,6 +64,19 @@
         "3d"
       ],
       "path": "widgets/running-avatar.json"
+    },
+    {
+      "id": "world",
+      "name": "The World",
+      "description": "A wireframe planet turning on your dashboard, with a satellite overhead and pins on the cities that matter.",
+      "version": "1.0.0",
+      "icon": "cloud",
+      "accent": "#126782",
+      "tags": [
+        "fun",
+        "3d"
+      ],
+      "path": "widgets/world.json"
     }
   ]
 }
