@@ -90,6 +90,19 @@
         "camera"
       ],
       "path": "widgets/camera-mirror.json"
+    },
+    {
+      "id": "camera-check",
+      "name": "Dual Camera Check",
+      "description": "Asks your phone whether it can stream the front and back cameras at the same time.",
+      "version": "1.0.0",
+      "icon": "insights",
+      "accent": "#3A86FF",
+      "tags": [
+        "camera",
+        "diagnostic"
+      ],
+      "path": "widgets/camera-check.json"
     }
   ]
 }

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "camera-check",
+  "name": "Dual Camera Check",
+  "description": "Asks your phone whether it can stream the front and back cameras at the same time. Tap to re-run.",
+  "author": "meetkool",
+  "version": "1.0.0",
+  "icon": "insights",
+  "accent": "#3A86FF",
+  "tags": ["camera", "diagnostic"],
+  "layout": {
+    "span": 2,
+    "minSpan": 1,
+    "maxSpan": 2,
+    "height": 200,
+    "minHeight": 195,
+    "maxHeight": 300
+  },
+  "body": [
+    {
+      "type": "row",
+      "justify": "between",
+      "align": "center",
+      "children": [
+        { "type": "label", "text": "Concurrent cameras" },
+        { "type": "iconBadge", "icon": "insights", "color": "blue", "size": 26 }
+      ]
+    },
+    { "type": "cameraCapability", "color": "blue", "size": 125 }
+  ]
+}
