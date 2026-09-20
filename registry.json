@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-18",
+  "updatedAt": "2026-09-20",
   "widgets": [
     {
       "id": "github-profile",
@@ -9,7 +9,10 @@
       "version": "1.0.0",
       "icon": "code",
       "accent": "#F77F00",
-      "tags": ["dev", "social"],
+      "tags": [
+        "dev",
+        "social"
+      ],
       "path": "widgets/github-profile.json"
     },
     {
@@ -19,7 +22,9 @@
       "version": "1.0.0",
       "icon": "water_drop",
       "accent": "#3A86FF",
-      "tags": ["health"],
+      "tags": [
+        "health"
+      ],
       "path": "widgets/water-intake.json"
     },
     {
@@ -29,8 +34,23 @@
       "version": "1.0.0",
       "icon": "trending_up",
       "accent": "#2E9E5B",
-      "tags": ["finance"],
+      "tags": [
+        "finance"
+      ],
       "path": "widgets/crypto-price.json"
+    },
+    {
+      "id": "github-activity",
+      "name": "GitHub Activity",
+      "description": "Your latest public pushes. Proof of work, or proof you stopped.",
+      "version": "1.0.0",
+      "icon": "commit",
+      "accent": "#2E9E5B",
+      "tags": [
+        "dev",
+        "accountability"
+      ],
+      "path": "widgets/github-activity.json"
     }
   ]
 }

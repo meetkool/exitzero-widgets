@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "github-activity",
+  "name": "GitHub Activity",
+  "description": "Your latest public pushes. Proof of work, or proof you stopped.",
+  "author": "meetkool",
+  "version": "1.0.0",
+  "icon": "commit",
+  "accent": "#2E9E5B",
+  "tags": ["dev", "accountability"],
+  "layout": {
+    "span": 2,
+    "minSpan": 1,
+    "maxSpan": 2,
+    "height": 180,
+    "minHeight": 160,
+    "maxHeight": 320
+  },
+  "config": [
+    {
+      "key": "user",
+      "label": "GitHub username",
+      "type": "string",
+      "default": "meetkool",
+      "hint": "e.g. torvalds",
+      "required": true
+    }
+  ],
+  "data": {
+    "url": "https://api.github.com/users/{{config.user}}/events/public?per_page=10",
+    "method": "GET",
+    "refreshSeconds": 900
+  },
+  "body": [
+    {
+      "type": "row",
+      "justify": "between",
+      "align": "center",
+      "children": [
+        { "type": "label", "text": "Recent activity" },
+        { "type": "iconBadge", "icon": "commit", "color": "green", "size": 28 }
+      ]
+    },
+    {
+      "type": "list",
+      "source": "{{data}}",
+      "limit": 3,
+      "gap": 8,
+      "emptyText": "No public activity yet. Go ship something.",
+      "item": {
+        "type": "column",
+        "align": "start",
+        "children": [
+          {
+            "type": "text",
+            "text": "{{item.repo.name ?? unknown repo}}",
+            "size": 12,
+            "weight": "semibold",
+            "maxLines": 1
+          },
+          {
+            "type": "text",
+            "text": "{{item.type ?? Event}}",
+            "size": 10,
+            "maxLines": 1,
+            "color": "#80F8F5E4"
+          }
+        ]
+      }
+    }
+  ]
+}
