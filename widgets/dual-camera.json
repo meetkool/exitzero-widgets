@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "dual-camera",
+  "name": "Both Eyes",
+  "description": "Front and back cameras live at the same time, side by side. Checks your device first, then waits for you to press START.",
+  "author": "meetkool",
+  "version": "1.0.0",
+  "icon": "person",
+  "accent": "#F77F00",
+  "tags": ["fun", "camera"],
+  "layout": {
+    "span": 2,
+    "minSpan": 2,
+    "maxSpan": 2,
+    "height": 300,
+    "minHeight": 295,
+    "maxHeight": 420
+  },
+  "body": [
+    {
+      "type": "row",
+      "justify": "between",
+      "align": "center",
+      "children": [
+        { "type": "label", "text": "Both eyes" },
+        { "type": "badge", "text": "front + back", "color": "orange" }
+      ]
+    },
+    { "type": "dualCameraFeed", "color": "orange", "size": 225 }
+  ]
+}

@@ -103,6 +103,19 @@
         "diagnostic"
       ],
       "path": "widgets/camera-check.json"
+    },
+    {
+      "id": "dual-camera",
+      "name": "Both Eyes",
+      "description": "Front and back cameras live at the same time, side by side.",
+      "version": "1.0.0",
+      "icon": "person",
+      "accent": "#F77F00",
+      "tags": [
+        "fun",
+        "camera"
+      ],
+      "path": "widgets/dual-camera.json"
     }
   ]
 }
