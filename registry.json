@@ -108,7 +108,7 @@
       "id": "dual-camera",
       "name": "Both Eyes",
       "description": "Front and back cameras live at the same time, side by side. Rotation is tunable from this manifest.",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "icon": "person",
       "accent": "#F77F00",
       "tags": [
