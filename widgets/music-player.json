@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "music-player",
+  "name": "Player",
+  "description": "Plays the music already on your phone. Tap the title for a list of every track it can find.",
+  "author": "meetkool",
+  "version": "1.0.0",
+  "icon": "music_note",
+  "accent": "#F7A8A8",
+  "tags": [
+    "music"
+  ],
+  "layout": {
+    "span": 2,
+    "minSpan": 2,
+    "maxSpan": 2,
+    "height": 245,
+    "minHeight": 235,
+    "maxHeight": 340
+  },
+  "body": [
+    {
+      "type": "musicPlayer",
+      "size": 165,
+      "color": "#F7A8A8"
+    }
+  ]
+}

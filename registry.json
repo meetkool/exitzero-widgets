@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-20",
+  "updatedAt": "2026-09-21",
   "widgets": [
     {
       "id": "github-profile",
@@ -116,6 +116,31 @@
         "camera"
       ],
       "path": "widgets/dual-camera.json"
+    },
+    {
+      "id": "clock",
+      "name": "Clock",
+      "description": "The time in a deep squircle, with today's date and your next alarm underneath.",
+      "version": "1.0.0",
+      "icon": "schedule",
+      "accent": "#63D9A6",
+      "tags": [
+        "clock",
+        "system"
+      ],
+      "path": "widgets/clock.json"
+    },
+    {
+      "id": "music-player",
+      "name": "Player",
+      "description": "Plays the music already on your phone, with a list of every track it can find.",
+      "version": "1.0.0",
+      "icon": "music_note",
+      "accent": "#F7A8A8",
+      "tags": [
+        "music"
+      ],
+      "path": "widgets/music-player.json"
     }
   ]
 }

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "clock",
+  "name": "Clock",
+  "description": "The time in a deep squircle, with today's date and your next alarm underneath.",
+  "author": "meetkool",
+  "version": "1.0.0",
+  "icon": "schedule",
+  "accent": "#63D9A6",
+  "tags": [
+    "clock",
+    "system"
+  ],
+  "layout": {
+    "span": 1,
+    "minSpan": 1,
+    "maxSpan": 2,
+    "height": 230,
+    "minHeight": 220,
+    "maxHeight": 340
+  },
+  "body": [
+    {
+      "type": "clock",
+      "size": 150,
+      "background": "#2E4A3F",
+      "color": "#63D9A6",
+      "timeColor": "#F1F3F0",
+      "showAlarm": true
+    }
+  ]
+}
