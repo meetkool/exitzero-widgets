@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "spotdl-downloader",
+  "name": "spotDL Downloader",
+  "description": "Search your own spotDL server, tap a track, and the mp3 lands in your phone's music library.",
+  "author": "meetkool",
+  "version": "1.0.0",
+  "icon": "music_note",
+  "accent": "#1DB954",
+  "tags": ["music", "tools"],
+  "layout": {
+    "span": 2,
+    "minSpan": 2,
+    "maxSpan": 2,
+    "height": 380,
+    "minHeight": 370,
+    "maxHeight": 560
+  },
+  "config": [
+    {
+      "key": "server",
+      "label": "spotDL server address",
+      "type": "string",
+      "default": "192.168.1.5:8800",
+      "hint": "Your PC's LAN address. Run: spotdl web --host 0.0.0.0",
+      "required": true
+    },
+    {
+      "key": "query",
+      "label": "Open with",
+      "type": "string",
+      "default": "",
+      "hint": "A search term, or a Spotify playlist link to list",
+      "required": false
+    }
+  ],
+  "body": [
+    {
+      "type": "spotdlDownloader",
+      "size": 300,
+      "color": "#1DB954",
+      "baseUrl": "{{config.server}}",
+      "query": "{{config.query}}"
+    }
+  ]
+}

@@ -243,6 +243,7 @@
             "clock",
             "musicPlayer",
             "cameraCapability",
+            "spotdlDownloader",
             "divider",
             "spacer"
           ]
@@ -591,6 +592,12 @@
         },
         "showAlarm": {
           "type": "boolean"
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "query": {
+          "type": "string"
         }
       },
       "additionalProperties": false

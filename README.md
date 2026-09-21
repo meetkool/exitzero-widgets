@@ -209,6 +209,7 @@ give:
 | `cameraFeed` | `size`, `color`, `facing` (`front`/`back`) |
 | `dualCameraFeed` | `size`, `color`, `backRotation`, `frontRotation`, `mirrorFront`, `debug` |
 | `cameraCapability` | `size`, `color` |
+| `spotdlDownloader` | `size`, `color`, `baseUrl`, `query` |
 
 `globe3d` markers are literal degrees:
 
@@ -220,6 +221,27 @@ give:
 and live here rather than in the app, so a device needing different numbers is a
 push. `debug: true` prints each lens's reported sensor orientation on its badge,
 which is how you find the right value on a new phone.
+
+`spotdlDownloader` is a client for a [spotDL](https://github.com/spotDL/spotify-downloader)
+web server **you run yourself** — spotDL is Python, so none of it runs on the
+phone. Start it on your machine with `spotdl web --host 0.0.0.0`, then point
+`baseUrl` at that machine's LAN address:
+
+```json
+{
+  "type": "spotdlDownloader",
+  "size": 300,
+  "color": "#1DB954",
+  "baseUrl": "{{config.server}}",
+  "query": "{{config.query}}"
+}
+```
+
+Typing a search term lists tracks; pasting a Spotify playlist, album or artist
+link lists everything behind it. The download button asks the server for that
+track and copies the finished mp3 into `Music/ExitZero`, so the `musicPlayer`
+widget finds it straight away. `baseUrl` is the one field that belongs in
+`config` rather than the manifest — it is different for every person.
 
 ---
 

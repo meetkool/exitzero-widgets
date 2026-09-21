@@ -141,6 +141,19 @@
         "music"
       ],
       "path": "widgets/music-player.json"
+    },
+    {
+      "id": "spotdl-downloader",
+      "name": "spotDL Downloader",
+      "description": "Search your own spotDL server, tap a track, and the mp3 lands in your phone's music library.",
+      "version": "1.0.0",
+      "icon": "music_note",
+      "accent": "#1DB954",
+      "tags": [
+        "music",
+        "tools"
+      ],
+      "path": "widgets/spotdl-downloader.json"
     }
   ]
 }
