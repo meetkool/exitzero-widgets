@@ -2,79 +2,536 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/meetkool/exitzero-widgets/schema.json",
   "title": "ExitZero widget manifest",
+  "description": "Generated from the renderer source, so it cannot drift from what the app actually draws.",
   "type": "object",
-  "required": ["id", "name", "body"],
+  "required": [
+    "id",
+    "name",
+    "body"
+  ],
   "properties": {
-    "schemaVersion": { "type": "integer", "minimum": 1, "default": 1 },
-    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
-    "name": { "type": "string" },
-    "description": { "type": "string" },
-    "author": { "type": "string" },
-    "version": { "type": "string" },
-    "icon": { "type": "string" },
-    "accent": { "type": "string" },
-    "tags": { "type": "array", "items": { "type": "string" } },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "icon": {
+      "enum": [
+        "alarm",
+        "attach_money",
+        "bedtime",
+        "bolt",
+        "book",
+        "bug_report",
+        "calendar_today",
+        "cancel",
+        "chat",
+        "check_circle",
+        "cloud",
+        "cloud_off",
+        "code",
+        "commit",
+        "directions_run",
+        "emoji_events",
+        "error_outline",
+        "event",
+        "favorite",
+        "fitness_center",
+        "flag",
+        "format_quote",
+        "group",
+        "insights",
+        "lightbulb",
+        "link",
+        "local_fire_department",
+        "mail",
+        "movie",
+        "music_note",
+        "notifications",
+        "person",
+        "restaurant",
+        "savings",
+        "schedule",
+        "school",
+        "send",
+        "shopping_cart",
+        "sports_esports",
+        "star",
+        "terminal",
+        "thermostat",
+        "timeline",
+        "trending_down",
+        "trending_up",
+        "water_drop",
+        "wb_sunny",
+        "widgets",
+        "work"
+      ]
+    },
+    "accent": {
+      "anyOf": [
+        {
+          "enum": [
+            "black",
+            "blue",
+            "burnt",
+            "cream",
+            "dark",
+            "deep",
+            "green",
+            "grey",
+            "orange",
+            "purple",
+            "red",
+            "teal",
+            "tealLight",
+            "white",
+            "yellow"
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$"
+        }
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "layout": {
       "type": "object",
       "properties": {
-        "span": { "type": "integer", "minimum": 1, "maximum": 2 },
-        "minSpan": { "type": "integer", "minimum": 1, "maximum": 2 },
-        "maxSpan": { "type": "integer", "minimum": 1, "maximum": 2 },
-        "height": { "type": "number" },
-        "minHeight": { "type": "number" },
-        "maxHeight": { "type": "number" }
-      }
+        "span": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2
+        },
+        "minSpan": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2
+        },
+        "maxSpan": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2
+        },
+        "height": {
+          "type": "number"
+        },
+        "minHeight": {
+          "type": "number"
+        },
+        "maxHeight": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
     },
     "config": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["key", "label"],
+        "required": [
+          "key",
+          "label"
+        ],
         "properties": {
-          "key": { "type": "string" },
-          "label": { "type": "string" },
-          "type": { "enum": ["string", "number"] },
-          "default": { "type": "string" },
-          "hint": { "type": "string" },
-          "required": { "type": "boolean" }
-        }
+          "key": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "string",
+              "number"
+            ]
+          },
+          "default": {
+            "type": "string"
+          },
+          "hint": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
       }
     },
     "data": {
       "type": "object",
-      "required": ["url"],
+      "required": [
+        "url"
+      ],
       "properties": {
-        "url": { "type": "string", "pattern": "^https://" },
-        "method": { "enum": ["GET", "POST"] },
-        "headers": { "type": "object" },
-        "refreshSeconds": { "type": "integer", "minimum": 30 },
-        "root": { "type": "string" }
-      }
+        "url": {
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "method": {
+          "enum": [
+            "GET",
+            "POST"
+          ]
+        },
+        "headers": {
+          "type": "object"
+        },
+        "refreshSeconds": {
+          "type": "integer",
+          "minimum": 30
+        },
+        "root": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     },
     "body": {
       "type": "array",
-      "items": { "$ref": "#/definitions/component" }
+      "items": {
+        "$ref": "#/definitions/component"
+      }
     }
   },
   "definitions": {
     "component": {
       "type": "object",
-      "required": ["type"],
+      "required": [
+        "type"
+      ],
       "properties": {
         "type": {
           "enum": [
-            "label", "text", "metric", "iconBadge", "badge",
-            "progressBar", "progressRing", "row", "column",
-            "list", "divider", "spacer"
+            "text",
+            "label",
+            "metric",
+            "iconBadge",
+            "badge",
+            "progressBar",
+            "progressRing",
+            "row",
+            "column",
+            "list",
+            "avatar3d",
+            "globe3d",
+            "cameraFeed",
+            "dualCameraFeed",
+            "cameraCapability",
+            "divider",
+            "spacer"
           ]
         },
-        "showIf": { "type": "string" },
+        "showIf": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "value": {},
+        "unit": {
+          "type": "string"
+        },
+        "unitSize": {
+          "type": "number"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "prefix": {
+          "type": "string"
+        },
+        "suffix": {
+          "type": "string"
+        },
+        "format": {
+          "enum": [
+            "compact",
+            "percent",
+            "integer",
+            "oneDecimal"
+          ]
+        },
+        "weight": {
+          "enum": [
+            "normal",
+            "medium",
+            "semibold",
+            "bold"
+          ]
+        },
+        "maxLines": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "size": {
+          "type": "number"
+        },
+        "color": {
+          "anyOf": [
+            {
+              "enum": [
+                "black",
+                "blue",
+                "burnt",
+                "cream",
+                "dark",
+                "deep",
+                "green",
+                "grey",
+                "orange",
+                "purple",
+                "red",
+                "teal",
+                "tealLight",
+                "white",
+                "yellow"
+              ]
+            },
+            {
+              "type": "string",
+              "pattern": "^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$"
+            }
+          ]
+        },
+        "icon": {
+          "enum": [
+            "alarm",
+            "attach_money",
+            "bedtime",
+            "bolt",
+            "book",
+            "bug_report",
+            "calendar_today",
+            "cancel",
+            "chat",
+            "check_circle",
+            "cloud",
+            "cloud_off",
+            "code",
+            "commit",
+            "directions_run",
+            "emoji_events",
+            "error_outline",
+            "event",
+            "favorite",
+            "fitness_center",
+            "flag",
+            "format_quote",
+            "group",
+            "insights",
+            "lightbulb",
+            "link",
+            "local_fire_department",
+            "mail",
+            "movie",
+            "music_note",
+            "notifications",
+            "person",
+            "restaurant",
+            "savings",
+            "schedule",
+            "school",
+            "send",
+            "shopping_cart",
+            "sports_esports",
+            "star",
+            "terminal",
+            "thermostat",
+            "timeline",
+            "trending_down",
+            "trending_up",
+            "water_drop",
+            "wb_sunny",
+            "widgets",
+            "work"
+          ]
+        },
+        "centerIcon": {
+          "enum": [
+            "alarm",
+            "attach_money",
+            "bedtime",
+            "bolt",
+            "book",
+            "bug_report",
+            "calendar_today",
+            "cancel",
+            "chat",
+            "check_circle",
+            "cloud",
+            "cloud_off",
+            "code",
+            "commit",
+            "directions_run",
+            "emoji_events",
+            "error_outline",
+            "event",
+            "favorite",
+            "fitness_center",
+            "flag",
+            "format_quote",
+            "group",
+            "insights",
+            "lightbulb",
+            "link",
+            "local_fire_department",
+            "mail",
+            "movie",
+            "music_note",
+            "notifications",
+            "person",
+            "restaurant",
+            "savings",
+            "schedule",
+            "school",
+            "send",
+            "shopping_cart",
+            "sports_esports",
+            "star",
+            "terminal",
+            "thermostat",
+            "timeline",
+            "trending_down",
+            "trending_up",
+            "water_drop",
+            "wb_sunny",
+            "widgets",
+            "work"
+          ]
+        },
+        "centerText": {
+          "type": "string"
+        },
+        "bgOpacity": {
+          "type": "number"
+        },
+        "thickness": {
+          "type": "number"
+        },
+        "max": {},
+        "justify": {
+          "enum": [
+            "start",
+            "center",
+            "end",
+            "between",
+            "around"
+          ]
+        },
+        "align": {
+          "enum": [
+            "start",
+            "center",
+            "end",
+            "stretch"
+          ]
+        },
+        "gap": {
+          "type": "number"
+        },
+        "flex": {
+          "type": "boolean"
+        },
+        "expand": {
+          "type": "boolean"
+        },
         "children": {
           "type": "array",
-          "items": { "$ref": "#/definitions/component" }
+          "items": {
+            "$ref": "#/definitions/component"
+          }
         },
-        "item": { "$ref": "#/definitions/component" }
-      }
+        "source": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "emptyText": {
+          "type": "string"
+        },
+        "item": {
+          "$ref": "#/definitions/component"
+        },
+        "height": {
+          "type": "number"
+        },
+        "secondsPerLap": {},
+        "showTrack": {
+          "type": "boolean"
+        },
+        "secondsPerSpin": {},
+        "showAtmosphere": {
+          "type": "boolean"
+        },
+        "showSatellite": {
+          "type": "boolean"
+        },
+        "markers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "lat",
+              "lon"
+            ],
+            "properties": {
+              "lat": {
+                "type": "number",
+                "minimum": -90,
+                "maximum": 90
+              },
+              "lon": {
+                "type": "number",
+                "minimum": -180,
+                "maximum": 180
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "facing": {
+          "type": "string"
+        },
+        "backRotation": {
+          "type": "integer"
+        },
+        "frontRotation": {
+          "type": "integer"
+        },
+        "mirrorFront": {
+          "type": "boolean"
+        },
+        "debug": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

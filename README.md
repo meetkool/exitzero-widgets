@@ -2,67 +2,72 @@
 
 The widget inventory for the [ExitZero](https://github.com/meetkool/ExitZero) app.
 
-Each widget is a single JSON file. The app ships a renderer; this repo ships
-the descriptions. **Publishing a widget is a git push — users do not reinstall
-the APK.**
+A widget is **one JSON file**. The app ships the renderer; this repo ships the
+descriptions. **Publishing a widget is a git push — nobody reinstalls the APK.**
 
-## How it works
+---
 
-```
-push widget.json  ─▶  raw.githubusercontent.com  ─▶  app fetches registry.json
-                                                      │
-                          Profile ▸ Settings ▸ Widgets ▸ Add
-                                                      │
-                                                      ▼
-                                          card appears on the dashboard
-```
+## Publish a widget in three steps
 
-The app reads `registry.json`, shows every entry in the in-app store, and
-downloads a widget's manifest when the user taps **Add**. Manifests and their
-data are cached on device, so installed widgets render instantly and survive
-being offline.
+1. Create `widgets/<your-id>.json`
+2. Add a matching row to `registry.json`
+3. Commit and push to `main`
 
-## Publishing a widget
+Then on the phone: **Profile ▸ ⚙️ ▸ Widgets ▸ pull down to refresh**.
 
-1. Add `widgets/<your-id>.json` (see the format below).
-2. Add a matching row to `registry.json`.
-3. Commit and push to `main`.
+Pull-to-refresh also re-fetches the manifests of widgets you already have, so
+**editing a published widget reaches phones that already installed it**. You do
+not need to remove and re-add.
 
-That's it. Users see it next time they open the widget store, or immediately
-if they pull to refresh.
+Two caches sit in the way, so allow a moment:
+
+| Cache | Length | Skip it by |
+|---|---|---|
+| GitHub raw CDN | 5 minutes | waiting |
+| The app's own | until refresh | pulling to refresh |
+
+---
 
 ## Why JSON and not code
 
-Flutter compiles ahead of time on Android and iOS, so the app physically
-cannot load new Dart at runtime — and app stores forbid dynamic code delivery
-anyway. A widget therefore describes *what to draw*, and the app decides *how*.
-That is also what makes installing one safe: a manifest is a layout, it cannot
-execute anything.
+Flutter compiles ahead of time, so the app physically cannot load new Dart at
+runtime, and app stores forbid shipping code this way. A widget therefore
+describes **what to draw**, and the app decides **how**. That is also what makes
+installing one safe: a manifest is a layout, it cannot execute anything.
 
-The practical limit: a widget can only use the component types listed below.
-Anything new needs an app release.
+**The practical boundary:**
+
+| Needs a new APK | Just a push |
+|---|---|
+| A new **component type** | New widgets using existing components |
+| An **icon** outside the 49 below | Any `#RRGGBB` colour |
+| A new **config field type** | New data sources, URLs, refresh rates |
+| Raising `schemaVersion` past 1 | Editing, re-versioning, removing widgets |
+
+---
 
 ## Manifest format
 
 ```jsonc
 {
-  "schemaVersion": 1,            // bump only on breaking changes
-  "id": "github-profile",        // must match the registry row and filename
-  "name": "GitHub Profile",
+  "schemaVersion": 1,            // this app supports 1
+  "id": "my-widget",             // must match the filename and registry row
+  "name": "My Widget",
   "description": "Shown in the store.",
   "author": "meetkool",
   "version": "1.0.0",
-  "icon": "code",                // from the icon list below
+  "icon": "star",                // from the icon list
   "accent": "#F77F00",           // default colour for components
+  "tags": ["fun"],
 
   "layout": {
     "span": 2,                   // 1 = half width, 2 = full width
     "minSpan": 1, "maxSpan": 2,
-    "height": 130,
-    "minHeight": 110, "maxHeight": 220
+    "height": 140,
+    "minHeight": 100, "maxHeight": 260
   },
 
-  // Optional. Prompted once, when the user installs.
+  // Optional. Asked once, when the user installs.
   "config": [
     { "key": "user", "label": "GitHub username", "type": "string",
       "default": "meetkool", "hint": "e.g. torvalds", "required": true }
@@ -70,10 +75,10 @@ Anything new needs an app release.
 
   // Optional. Leave it out for a widget that needs no network.
   "data": {
-    "url": "https://api.github.com/users/{{config.user}}",
-    "method": "GET",
+    "url": "https://api.example.com/thing/{{config.user}}",
+    "method": "GET",             // GET or POST
     "headers": {},
-    "refreshSeconds": 1800,
+    "refreshSeconds": 900,
     "root": "data.items"         // optional: unwrap before binding
   },
 
@@ -81,21 +86,37 @@ Anything new needs an app release.
 }
 ```
 
-### Rules the app enforces
+### Sizing rule — read this one
+
+A card is 32px of padding plus a ~24px heading row plus your components. A
+component with a **fixed size** (`avatar3d`, `globe3d`, `cameraFeed`,
+`dualCameraFeed`, `cameraCapability`) will overflow if the card can be made
+smaller than it needs. Keep:
+
+```
+minHeight  >=  component size + 70
+```
+
+Check it at **minHeight**, not at `height` — the user can shrink the card.
+
+### What the app enforces
 
 - `data.url` **must be https**. Anything else is refused at runtime.
-- An unknown component type is skipped, not crashed on.
-- A manifest with a `schemaVersion` newer than the installed app shows
-  "Update required" instead of rendering partially.
-- A failed refresh keeps showing the last good data rather than an error.
+- An **unknown component** renders "Update the app to see this" naming the type,
+  so an out-of-date app is obvious rather than a blank card.
+- A `schemaVersion` newer than the app shows "Update required" instead of
+  rendering half a widget.
+- A **failed refresh keeps the last good data** rather than flipping to an error.
+
+---
 
 ## Expressions
 
-Any string field can contain `{{ ... }}`.
+Any string field may contain `{{ ... }}`.
 
 | Root | Is |
 |---|---|
-| `data` | the parsed response body (after `root`) |
+| `data` | the parsed response body, after `root` |
 | `config` | what the user typed at install |
 | `item` | the current entry inside a `list` |
 | `index` | the current index inside a `list` |
@@ -108,53 +129,129 @@ Supply a fallback with `??`:
 {{data.bio ?? No bio set}}
 ```
 
+**Config values always arrive as strings.** `{{config.count ?? 5}}` yields
+`"5"`, not `5` — numeric fields parse it, but keep it in mind.
+
+---
+
 ## Components
 
-| Type | Purpose | Main fields |
-|---|---|---|
-| `label` | small spaced caption | `text`, `color`, `size` |
-| `text` | body text | `text`, `size`, `weight`, `color`, `maxLines`, `format` |
-| `metric` | the big number | `value`, `unit`, `caption`, `format`, `size`, `color` |
-| `iconBadge` | icon in a tinted circle | `icon`, `color`, `size`, `bgOpacity` |
-| `badge` | small pill | `text` **or** `value` + `format` + `prefix`/`suffix`, `color` |
-| `progressBar` | horizontal bar | `value`, `max`, `color`, `thickness` |
-| `progressRing` | ring | `value`, `max`, `color`, `size`, `centerText`, `centerIcon` |
-| `row` | horizontal group | `children`, `justify`, `align`, `gap` |
-| `column` | vertical group | `children`, `justify`, `align`, `gap`, `flex`, `expand` |
-| `list` | repeat over an array | `source`, `item`, `limit`, `gap`, `emptyText` |
-| `divider` | hairline | `height` |
-| `spacer` | gap or flexible space | `size` (omit to flex) |
+Every component also accepts **`showIf`**: when its expression resolves to
+empty, `0` or `false`, the component is left out silently.
 
-Every component also accepts `showIf`: when its expression resolves to empty,
-`0` or `false`, the component is left out.
+### Text and numbers
+
+| Type | Fields |
+|---|---|
+| `label` | `text`, `color`, `size` — small spaced caption, upper-cased for you |
+| `text` | `text`, `size`, `weight`, `color`, `maxLines`, `format` |
+| `metric` | `value`, `unit`, `unitSize`, `caption`, `format`, `size`, `color` |
+| `badge` | `text` **or** `value`+`format`+`prefix`+`suffix`, `color`, `size` |
+
+`badge` has two modes: plain `text`, or a `value` you want **formatted** —
+formatting needs the number alone, which a template with words around it cannot
+give:
+
+```json
+{ "type": "badge", "value": "{{data.change ?? 0}}",
+  "format": "oneDecimal", "suffix": "% 24h", "color": "green" }
+```
+
+### Indicators
+
+| Type | Fields |
+|---|---|
+| `iconBadge` | `icon`, `color`, `size`, `bgOpacity` |
+| `progressBar` | `value`, `max`, `color`, `thickness` |
+| `progressRing` | `value`, `max`, `color`, `size`, `thickness`, `centerText`, `centerIcon` |
+
+`value` accepts a 0–1 fraction, a 0–100 number, or a `value`/`max` pair.
+
+### Layout
+
+| Type | Fields |
+|---|---|
+| `row` | `children`, `justify`, `align`, `gap` |
+| `column` | `children`, `justify`, `align`, `gap`, `flex`, `expand` |
+| `divider` | `height` |
+| `spacer` | `size` (omit to flex) |
 
 `justify`: `start` `center` `end` `between` `around`
 `align`: `start` `center` `end` `stretch`
+`weight`: `normal` `medium` `semibold` `bold`
 `format`: `compact` `percent` `integer` `oneDecimal`
 
-### Colours
+> **Long text belongs in a `column`, not a `row`.** Row children are not wrapped
+> in `Flexible`, so a long string inside a row overflows its card. A column
+> gives its children the full width, so text ellipsises properly.
 
-Brand tokens `orange` `burnt` `teal` `tealLight` `cream` `dark` `deep`,
-basics `white` `black` `green` `red` `yellow` `blue` `purple` `grey`,
-or a literal `#RRGGBB` / `#AARRGGBB`.
+### Repeating
 
-### Icons
+```json
+{ "type": "list",
+  "source": "{{data}}",          // or "{{data.items}}"
+  "limit": 3,
+  "gap": 8,
+  "emptyText": "Nothing yet.",
+  "item": { "type": "column", "children": [
+    { "type": "text", "text": "{{item.name}}", "weight": "semibold" },
+    { "type": "text", "text": "{{item.detail}}", "size": 10 }
+  ]}
+}
+```
 
-Only names the app knows are allowed — a manifest cannot point at an arbitrary
-glyph, which keeps icon tree-shaking working:
+### Scenes and hardware
 
-`widgets` `star` `favorite` `bolt` `local_fire_department` `code` `terminal`
-`bug_report` `commit` `trending_up` `trending_down` `timeline` `insights`
-`check_circle` `cancel` `schedule` `alarm` `calendar_today` `event`
-`notifications` `mail` `send` `chat` `person` `group` `work` `school` `book`
-`water_drop` `restaurant` `fitness_center` `directions_run` `bedtime`
-`wb_sunny` `cloud` `thermostat` `attach_money` `savings` `shopping_cart`
-`music_note` `movie` `sports_esports` `flag` `emoji_events` `lightbulb`
-`format_quote` `link` `cloud_off` `error_outline`
+| Type | Fields |
+|---|---|
+| `avatar3d` | `size`, `color`, `secondsPerLap`, `showTrack` |
+| `globe3d` | `size`, `color`, `secondsPerSpin`, `showAtmosphere`, `showSatellite`, `markers` |
+| `cameraFeed` | `size`, `color`, `facing` (`front`/`back`) |
+| `dualCameraFeed` | `size`, `color`, `backRotation`, `frontRotation`, `mirrorFront`, `debug` |
+| `cameraCapability` | `size`, `color` |
 
-## A complete example
+`globe3d` markers are literal degrees:
 
-`widgets/water-intake.json` needs no network at all:
+```json
+"markers": [ { "lat": 19.07, "lon": 72.87 }, { "lat": 51.51, "lon": -0.13 } ]
+```
+
+`dualCameraFeed` rotations are **clockwise degrees** (`0`, `90`, `180`, `270`)
+and live here rather than in the app, so a device needing different numbers is a
+push. `debug: true` prints each lens's reported sensor orientation on its badge,
+which is how you find the right value on a new phone.
+
+---
+
+## Colours
+
+Brand tokens: `orange` `burnt` `teal` `tealLight` `cream` `dark` `deep`
+Basics: `white` `black` `green` `red` `yellow` `blue` `purple` `grey`
+Or a literal `#RRGGBB` / `#AARRGGBB`.
+
+## Icons
+
+Only these 49. A manifest cannot point at an arbitrary glyph — that keeps
+Flutter's icon tree-shaking working and the app small:
+
+```
+alarm            attach_money     bedtime          bolt             book
+bug_report       calendar_today   cancel           chat             check_circle
+cloud            cloud_off        code             commit           directions_run
+emoji_events     error_outline    event            favorite         fitness_center
+flag             format_quote     group            insights         lightbulb
+link             local_fire_department              mail             movie
+music_note       notifications    person           restaurant       savings
+schedule         school           send             shopping_cart    sports_esports
+star             terminal         thermostat       timeline         trending_down
+trending_up      water_drop       wb_sunny         widgets          work
+```
+
+---
+
+## A complete example, no network
+
+`widgets/water-intake.json`:
 
 ```json
 {
@@ -163,10 +260,10 @@ glyph, which keeps icon tree-shaking working:
   "name": "Water Intake",
   "icon": "water_drop",
   "accent": "#3A86FF",
-  "layout": { "span": 1, "height": 140 },
+  "layout": { "span": 1, "height": 140, "minHeight": 120, "maxHeight": 220 },
   "config": [
-    { "key": "glasses", "label": "Glasses so far today", "type": "number", "default": "3" },
-    { "key": "target",  "label": "Daily target",         "type": "number", "default": "8" }
+    { "key": "glasses", "label": "Glasses so far", "type": "number", "default": "3" },
+    { "key": "target",  "label": "Daily target",   "type": "number", "default": "8" }
   ],
   "body": [
     { "type": "label", "text": "Hydration" },
@@ -181,7 +278,38 @@ glyph, which keeps icon tree-shaking working:
 }
 ```
 
-## Pointing the app somewhere else
+And its `registry.json` row:
+
+```json
+{
+  "id": "water-intake",
+  "name": "Water Intake",
+  "description": "Daily hydration ring.",
+  "version": "1.0.0",
+  "icon": "water_drop",
+  "accent": "#3A86FF",
+  "tags": ["health"],
+  "path": "widgets/water-intake.json"
+}
+```
+
+---
+
+## Checklist before pushing
+
+- [ ] `id` matches the filename **and** the registry row
+- [ ] Every `{{config.x}}` has a matching `config` entry
+- [ ] Every `icon` is in the list above
+- [ ] Every non-hex `color` is a token above
+- [ ] `data.url` starts with `https://`
+- [ ] `minHeight >= fixed component size + 70`
+- [ ] Long text is inside a `column`, not a `row`
+- [ ] The JSON parses (`python3 -m json.tool widgets/yours.json`)
+
+Bump `version` in **both** the manifest and the registry row when you change a
+published widget, so it is obvious in the store which copy is out there.
+
+## Running your own inventory
 
 The app reads this repo because of `lib/services/widget_repo_config.dart` in
-ExitZero. Change `owner`, `repo` or `branch` there to run your own inventory.
+ExitZero. Change `owner`, `repo` or `branch` there to point it elsewhere.
