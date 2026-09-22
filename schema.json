@@ -521,6 +521,12 @@
         "facing": {
           "type": "string"
         },
+        "recordBackRotation": {
+          "type": "number"
+        },
+        "recordFrontRotation": {
+          "type": "number"
+        },
         "backRotation": {
           "type": "integer"
         },

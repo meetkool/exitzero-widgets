@@ -207,7 +207,7 @@ give:
 | `avatar3d` | `size`, `color`, `secondsPerLap`, `showTrack` |
 | `globe3d` | `size`, `color`, `secondsPerSpin`, `showAtmosphere`, `showSatellite`, `markers` |
 | `cameraFeed` | `size`, `color`, `facing` (`front`/`back`) |
-| `dualCameraFeed` | `size`, `color`, `backRotation`, `frontRotation`, `mirrorFront`, `debug` |
+| `dualCameraFeed` | `size`, `color`, `backRotation`, `frontRotation`, `recordBackRotation`, `recordFrontRotation`, `mirrorFront`, `debug` |
 | `cameraCapability` | `size`, `color` |
 | `spotdlDownloader` | `size`, `color`, `baseUrl`, `query` |
 
@@ -221,6 +221,18 @@ give:
 and live here rather than in the app, so a device needing different numbers is a
 push. `debug: true` prints each lens's reported sensor orientation on its badge,
 which is how you find the right value on a new phone.
+
+`recordBackRotation` and `recordFrontRotation` are the same idea for the
+recording, and they are **separate values on purpose**: the preview turns a
+texture inside a tall pane and crops it, while the recording turns the same
+texture into a 1280x720 landscape frame. The geometry differs, so the number
+that looks right in one is not necessarily right in the other. Both default to
+the sensor orientation the device reports.
+
+Recording composites live — the back lens fills the frame, the front sits
+bottom right behind a white border — and files the result in `Movies/ExitZero`.
+The record button only appears when the device gave the recorder a second
+camera stream, which concurrent camera mode does not guarantee.
 
 `spotdlDownloader` is a client for a [spotDL](https://github.com/spotDL/spotify-downloader)
 web server **you run yourself** — spotDL is Python, so none of it runs on the

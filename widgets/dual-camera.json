@@ -4,7 +4,7 @@
   "name": "Both Eyes",
   "description": "Front and back cameras live at the same time, side by side. Checks your device first, then waits for you to press START.",
   "author": "meetkool",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "icon": "person",
   "accent": "#F77F00",
   "tags": [
@@ -42,6 +42,8 @@
       "size": 225,
       "backRotation": 0,
       "frontRotation": 0,
+      "recordBackRotation": 90,
+      "recordFrontRotation": 270,
       "mirrorFront": false,
       "debug": true
     }
