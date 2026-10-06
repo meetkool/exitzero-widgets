@@ -244,6 +244,7 @@
             "musicPlayer",
             "cameraCapability",
             "spotdlDownloader",
+            "videoPlayer",
             "divider",
             "spacer"
           ]
@@ -601,6 +602,16 @@
         },
         "baseUrl": {
           "type": "string"
+        },
+        "videos": {},
+        "autoplay": {
+          "type": "boolean"
+        },
+        "muted": {
+          "type": "boolean"
+        },
+        "loop": {
+          "type": "boolean"
         },
         "query": {
           "type": "string"

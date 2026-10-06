@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "video-playlist",
+  "name": "Video Playlist",
+  "description": "A video player with a whole playlist behind it. Nothing loads until you press play.",
+  "author": "meetkool",
+  "version": "1.0.0",
+  "icon": "movie",
+  "accent": "#F77F00",
+  "tags": ["media", "fun"],
+  "layout": {
+    "span": 2,
+    "minSpan": 2,
+    "maxSpan": 2,
+    "height": 290,
+    "minHeight": 280,
+    "maxHeight": 460
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/meetkool/exitzero-widgets/main/playlists/videos.json",
+    "method": "GET",
+    "refreshSeconds": 3600,
+    "root": "videos"
+  },
+  "body": [
+    {
+      "type": "videoPlayer",
+      "size": 210,
+      "color": "orange",
+      "videos": "{{data}}",
+      "autoplay": false,
+      "muted": false,
+      "loop": true
+    }
+  ]
+}

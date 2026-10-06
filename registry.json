@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-22",
+  "updatedAt": "2026-10-06",
   "widgets": [
     {
       "id": "github-profile",
@@ -154,6 +154,19 @@
         "tools"
       ],
       "path": "widgets/spotdl-downloader.json"
+    },
+    {
+      "id": "video-playlist",
+      "name": "Video Playlist",
+      "description": "A video player with a whole playlist behind it. Nothing loads until you press play.",
+      "version": "1.0.0",
+      "icon": "movie",
+      "accent": "#F77F00",
+      "tags": [
+        "media",
+        "fun"
+      ],
+      "path": "widgets/video-playlist.json"
     }
   ]
 }

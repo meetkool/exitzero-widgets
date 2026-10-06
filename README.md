@@ -210,6 +210,7 @@ give:
 | `dualCameraFeed` | `size`, `color`, `backRotation`, `frontRotation`, `recordBackRotation`, `recordFrontRotation`, `mirrorFront`, `debug` |
 | `cameraCapability` | `size`, `color` |
 | `spotdlDownloader` | `size`, `color`, `baseUrl`, `query` |
+| `videoPlayer` | `size`, `color`, `videos`, `autoplay`, `muted`, `loop` |
 
 `globe3d` markers are literal degrees:
 
@@ -254,6 +255,36 @@ link lists everything behind it. The download button asks the server for that
 track and copies the finished mp3 into `Music/ExitZero`, so the `musicPlayer`
 widget finds it straight away. `baseUrl` is the one field that belongs in
 `config` rather than the manifest — it is different for every person.
+
+`videoPlayer` plays a playlist. `videos` is either a literal array in the
+manifest or a binding to one fetched by the widget's `data` source — the same
+line handles both, so a long playlist can live in its own file instead of
+bloating the manifest. Each entry is `{ "title", "url", "note", "poster" }` and
+**the url must be plain https**: a manifest should not be able to talk the app
+into a cleartext fetch, which is the rule `data` sources already follow. Entries
+that fail that check are dropped rather than played.
+
+The stock playlist lives in `playlists/videos.json`, which is why
+`video-playlist.json` points its `data.url` at that file instead of listing
+videos inline:
+
+```json
+"data": {
+  "url": "https://raw.githubusercontent.com/<you>/exitzero-widgets/main/playlists/videos.json",
+  "refreshSeconds": 3600,
+  "root": "videos"
+},
+"body": [ { "type": "videoPlayer", "size": 210, "videos": "{{data}}" } ]
+```
+
+Adding or fixing a link is then a commit to one text file — no manifest edit, no
+app build. That matters more than it sounds: a playlist is a list of other
+people's hosting, and links rot. The card treats every entry as able to fail and
+offers Retry and Skip on a dead one rather than taking the widget down with it.
+
+Nothing is fetched until play is pressed. A dashboard that started pulling video
+the moment it opened would be both rude and expensive, so `autoplay` defaults to
+off and the card shows a poster and waits.
 
 ---
 

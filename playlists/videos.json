@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-06",
+  "note": "Edit this file to change the playlist. The widget re-reads it hourly, so adding or fixing a link needs no new app build and no manifest change. Entries must be plain https.",
+  "videos": [
+    {
+      "title": "Big Buck Bunny",
+      "note": "Blender Foundation - Creative Commons Attribution",
+      "url": "https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4"
+    },
+    {
+      "title": "Big Buck Bunny (trailer)",
+      "note": "Blender Foundation - Creative Commons Attribution",
+      "url": "https://media.w3.org/2010/05/bunny/trailer.mp4"
+    },
+    {
+      "title": "Big Buck Bunny (short cut)",
+      "note": "Blender Foundation - Creative Commons Attribution",
+      "url": "https://media.w3.org/2010/05/bunny/movie.mp4"
+    },
+    {
+      "title": "Sintel (trailer)",
+      "note": "Blender Foundation - Creative Commons Attribution",
+      "url": "https://media.w3.org/2010/05/sintel/trailer.mp4"
+    },
+    {
+      "title": "Sintel (trailer, 720p)",
+      "note": "Blender Foundation - Creative Commons Attribution",
+      "url": "https://download.blender.org/durian/trailer/sintel_trailer-720p.mp4"
+    },
+    {
+      "title": "Sintel (trailer, 480p)",
+      "note": "Blender Foundation - Creative Commons Attribution",
+      "url": "https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4"
+    },
+    {
+      "title": "Test pattern",
+      "note": "W3C test media",
+      "url": "https://media.w3.org/2010/05/video/movie_300.mp4"
+    },
+    {
+      "title": "Big Buck Bunny (720p, Internet Archive)",
+      "note": "Blender Foundation - Creative Commons Attribution",
+      "url": "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
+    }
+  ]
+}
